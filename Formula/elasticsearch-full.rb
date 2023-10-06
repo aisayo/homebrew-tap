@@ -65,7 +65,14 @@ class ElasticsearchFull < Formula
     s
   end
 
-  plist_options :manual => "elasticsearch"
+  service "elasticsearch" do
+    run [opt_bin/"elasticsearch", "-d", "-p", var/"run/elasticsearch/elasticsearch.pid"]
+    keep_alive true
+    error_log_path var/"log/elasticsearch.log"
+    log_path var/"log/elasticsearch.log"
+    working_dir HOMEBREW_PREFIX
+    environment_variables LANG: "en_US.UTF-8"
+  end
 
   def plist
     <<~EOS
